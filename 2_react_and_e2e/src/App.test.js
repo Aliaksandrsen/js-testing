@@ -1,13 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from './App';
 
 describe('TEST APP', () => {
   test('renders learn react link', () => {
     render(<App />);
-    const helloЦorldElement = screen.getByText(/hello world/i);
+    const helloWorldElement = screen.getByText(/hello world/i);
     const btn = screen.getByRole('button');
     const input = screen.getByPlaceholderText(/input value/i);
-    expect(helloЦorldElement).toBeInTheDocument();
+    expect(helloWorldElement).toBeInTheDocument();
     expect(btn).toBeInTheDocument();
     expect(input).toBeInTheDocument();
     expect(input).toMatchSnapshot();
@@ -15,8 +16,8 @@ describe('TEST APP', () => {
 
   test('renders learn react link1', async () => {
     render(<App />);
-    // const helloЦorldElement = screen.queryByText(/hello2/i);
-    // expect(helloЦorldElement).toBeNull();
+    // const helloWorldElement = screen.queryByText(/hello2/i);
+    // expect(helloWorldElement).toBeNull();
 
     const helloWorldElem = await screen.findByText(/data/i);
     expect(helloWorldElem).toBeInTheDocument();
@@ -31,5 +32,18 @@ describe('TEST APP', () => {
     expect(screen.getByTestId('toggle-elem')).toBeInTheDocument();
     fireEvent.click(btn);
     expect(screen.queryByTestId('toggle-elem')).toBeNull();
+  });
+
+  test('INPUT EVENT', () => {
+    render(<App />);
+    const input = screen.getByPlaceholderText(/input value/i);
+    expect(screen.queryByTestId('value-elem')).toContainHTML('');
+    // Искуственное событие
+    // fireEvent.input(input, {
+    //   target: {value: '123123'}
+    // })
+    // Близко к пользователю, обрабатываются события нажатия клавиш и тд
+    userEvent.type(input, '123123');
+    expect(screen.queryByTestId('value-elem')).toContainHTML('123123');
   });
 });
