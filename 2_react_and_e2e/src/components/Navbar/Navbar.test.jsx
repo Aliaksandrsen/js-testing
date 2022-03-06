@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import Navbar from './Navbar';
+
 import { renderWithRouter } from '../../tests/helpers/renderWithRouter';
 
 describe('USERS TEST', () => {
@@ -18,7 +19,6 @@ describe('USERS TEST', () => {
     userEvent.click(aboutLink);
     expect(screen.getByTestId('about-page')).toBeInTheDocument();
   });
-
   test('main link', async () => {
     render(renderWithRouter(<Navbar />, '/users'));
     const mainLink = screen.getByTestId('main-link');
