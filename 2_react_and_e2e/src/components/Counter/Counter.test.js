@@ -1,19 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import Counter from './Counter';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
-import { createReduxStore } from '../../store/store';
+
+import { renderWithRedux } from '../../tests/helpers/renderWithRedux';
 
 describe('Counter test', () => {
   test('router', async () => {
     const { getByTestId } = render(
-      <Provider
-        store={createReduxStore({
-          counter: { value: 10 },
-        })}
-      >
-        <Counter />
-      </Provider>
+      renderWithRedux(<Counter />, { counter: { value: 10 } })
     );
 
     const incrementBtn = screen.getByTestId('increment-btn');
